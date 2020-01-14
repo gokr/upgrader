@@ -169,6 +169,7 @@ class UpgradeCard extends _UpgradeBase {
     BoolCallback onUpdate,
     String prompt,
     String title,
+    String Function(Upgrader) messageUpdate,
     http.Client client,
   }) : super(
           key: key,
@@ -185,6 +186,7 @@ class UpgradeCard extends _UpgradeBase {
           onUpdate: onUpdate,
           prompt: prompt,
           title: title,
+          messageUpdate: messageUpdate,
           client: client,
         );
 
