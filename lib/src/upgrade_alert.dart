@@ -51,6 +51,9 @@ class _UpgradeBase extends StatefulWidget {
   /// The title of the alert dialog. Defaults to: Update App?
   final String title;
 
+  /// A function that takes the Upgrader to build the message
+  String Function(Upgrader) messageUpdate;
+
   /// Provide an HTTP Client that can be replaced for mock testing.
   final http.Client client;
 
@@ -69,6 +72,7 @@ class _UpgradeBase extends StatefulWidget {
     this.onUpdate,
     this.prompt,
     this.title,
+    this.messageUpdate,
     this.client,
   }) : super(key: key) {
     if (appcastConfig != null) {
@@ -112,6 +116,9 @@ class _UpgradeBase extends StatefulWidget {
     }
     if (title != null) {
       Upgrader().title = title;
+    }
+    if (messageUpdate != null) {
+      Upgrader().messageUpdate = messageUpdate;
     }
   }
 
@@ -369,7 +376,7 @@ class _AlertStyleWidget extends StatelessWidget {
           label = semanticLabel ??
               MaterialLocalizations.of(context)?.alertDialogLabel;
           break;
-        case TargetPlatform.macOS:
+        default:
           label = semanticLabel;
           break;
       }

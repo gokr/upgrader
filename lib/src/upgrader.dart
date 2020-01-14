@@ -48,6 +48,8 @@ class Upgrader {
   /// The update button title, which defaults to ```Update Now```
   String buttonTitleUpdate = 'Update Now'.toUpperCase();
 
+  String Function(Upgrader) messageUpdate;
+
   /// Provide an HTTP Client that can be replaced for mock testing.
   http.Client client = http.Client();
 
@@ -233,7 +235,10 @@ class Upgrader {
   }
 
   String message() {
-    return 'A new version of ${appName()} is available! Version ${currentAppStoreVersion()} is now available-you have ${currentInstalledVersion()}.';
+    if (messageUpdate != null) {
+      return messageUpdate(this);
+    }
+    return 'A new version of ${appName()} is available! Version ${currentAppStoreVersion()} is now available - you have ${currentInstalledVersion()}.';
   }
 
   void checkVersion({@required BuildContext context}) {
